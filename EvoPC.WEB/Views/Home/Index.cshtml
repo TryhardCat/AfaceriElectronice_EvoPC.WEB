@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ProcesorVM>;
+
+@{
+    ViewData["Title"] = "Home Page";
+    var detailsRoute = "/Details/{0}";
+}
+<html>
+<body style="background-color: #ffdb99; ">
+    @*#ffdb99*@
+
+    <div class="row">
+
+        @foreach (var procesor in Model)
+        {
+            <div class="col-4">
+                <div class="card mb-4" style="background-image: linear-gradient(rgb(66,66,66),rgb(66,66,66),#FFFFFF); ">
+
+                    <div class="card-header" style="color:black;">
+                        <h4 class="my-0 font-weight-normal">
+                            <label style="font-size:25px;color: white;">@procesor.Name</label>
+                        </h4>
+                    </div>
+
+                    <img class="card-img-top" style="height:100%" src="~/@procesor.ImagePath" alt="no image" />
+
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <label style="font-size:20px; color:black"><b>$@procesor.Pret</b></label>
+                            </div>
+                            <a href="@string.Format(detailsRoute,procesor.Id)" class="btn fa-pull-right btn-outline-info font-weight-bold" style="color:black">Detalii</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+
+    </div>
+</body>
+</html>

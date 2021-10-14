@@ -1,0 +1,85 @@
+﻿@model ProcesorVM
+
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    bool isInBag = false;
+    var lstCart = HttpContextAccessor.HttpContext.Session.Get<List<int>>(SessionHelper.ShoppingCart);
+    if (lstCart != null && lstCart.Contains(Model.Id))
+        isInBag = true;
+
+    var route = isInBag ? "/Remove/{0}" : "/Add/{0}";
+    route = string.Format(route, Model.Id);
+}
+<html>
+<body style="background-color: #ffdb99; ">
+
+    <h2 class="text-info text-dark" style="color:black;">Detalii Procesor</h2>
+
+    <form action="@route" method="post">
+
+        <div class="p-4 border rounded row border-dark" style="background-color: #420303;">
+            <div class="col-8">
+
+                <div class="form-group row">
+                    <div class="col-4 text-white" style="font-size:20px;">
+                        <label>Denumire Procesor</label>
+                    </div>
+                    <div class="col-4">
+                        <input asp-for="Name" readonly class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4 text-white" style="font-size:20px;">
+                        <label>Pret</label>
+                    </div>
+                    <div class="col-4">
+                        <input asp-for="Pret" readonly class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4 text-white"style="font-size:20px;">
+                        <label>Descriere</label>
+                    </div>
+                    <div class="col-4" >
+                        @Html.TextArea("Description", Model.Description, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4"></div>
+                    <div class="col-8">
+                        @if (isInBag)
+                        {
+                            <button type="submit" value="Stergeti din cos" class="btn btn-danger form-control">Stergeti din cos</button>
+                        }
+                        else
+                        {
+                            <button type="submit" value="Adaugati in cos" class="btn btn-primary form-control">Adaugati in cos</button>
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-1">
+
+
+            </div>
+
+            <div class="col-3">
+
+                <img src="~/@Model.ImagePath" alt="no image" width="100%" style="border-radius:5px; border:1px solid #bbb9b9;" />
+            </div>
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            <a asp-action="Index" class="btn btn-success">Inapoi la lista</a>
+        </div>
+
+    </form>
+</body>
+</html>

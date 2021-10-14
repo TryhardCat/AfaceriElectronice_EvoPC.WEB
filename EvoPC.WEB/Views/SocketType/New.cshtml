@@ -1,0 +1,9 @@
+﻿@model SocketTypeVM
+
+@{ 
+    ViewData["Title"] = "Creati un tip de socket";
+}
+
+@{ ViewBag.IsNew = true;}
+
+@await Html.PartialAsync(@"../Shared/Components/_SocketType.cshtml")

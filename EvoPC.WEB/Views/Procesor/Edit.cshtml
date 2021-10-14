@@ -1,0 +1,9 @@
+﻿@model ProcesorVM
+
+@{
+    ViewData["Title"] = "Editati un procesor";
+}
+
+@{ ViewBag.IsNew = false;}
+
+@await Html.PartialAsync(@"../Shared/Components/_Procesor.cshtml")

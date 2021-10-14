@@ -1,0 +1,135 @@
+﻿@model ProcesorVM
+
+@{
+    string action = "";
+    var isNew = (bool)ViewBag.IsNew;
+    if(isNew)
+        action = "/Procesor/New";
+    else
+        action = string.Format("/Procesor/Edit/{0}", Model.Id);
+}
+
+<html>
+<body style="background-color: #ffdb99; ">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 table-round shadow" style="background-color: #420303">
+
+            <br />
+            <div style="color:white;">
+                <h4>Procesor</h4>
+            </div>
+            <br />
+
+            <div class="col-xl-12">
+                <input asp-for="Id" hidden />
+
+                <form action="@action" method="post" enctype="multipart/form-data">
+
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <br />
+                    <div class="row">
+
+                        <div class="col-sm-12 col-lg-12">
+
+                            <div class="row">
+
+                                <div class="col-xs-12 col-sm-2">
+                                    <label class="control-label "style="color:white;">Denumire procesor</label>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-4">
+                                    <input asp-for="Name" class="form-control" /><br />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-2">
+                                    <label class="control-label "style="color:white;">Pret</label>
+                                </div>
+                                <div class="col-xs-12 col-sm-4">
+                                    <input asp-for="Pret" class="form-control" /><br />
+                                    <span asp-validation-for="Pret" class="text-danger"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-xs-12 col-sm-2">
+                                    <label class="control-label "style="color:white;">Este in stoc</label>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-4">
+                                    <input type="checkbox" asp-for="EsteInStoc" /><br />
+                                    <span asp-validation-for="EsteInStoc" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-2">
+                                    <label class="control-label "style="color:white;">Socket</label>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-4">
+                                    @Html.DropDownList("SocketTypeId", new SelectList(Model.SocketTypes, "Id", "Name", Model.SocketTypeId), new { @class = "form-control" })
+                                    <span asp-validation-for="Pret" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <br />
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-2">
+                                    <label class="control-label " style="color:white;">Incarcati o imagine </label>
+                            </div>
+
+                                <div class="col-xs-12 col-sm-4">
+                                    <input id="fileInput" type="file" asp-for="ProcImage" class="custom-file-input" onchange="Procesor.onCHangeFile(event)" /><br />
+                                    <label id="fileUploadlabel" class="custom-file-label" for="fileInput">Alegeti un fisier</label>
+                                    <span asp-validation-for="ProcImage" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <br />
+
+                            <div class="row">
+
+                                <div class="col-xs-12 col-sm-2">
+                                    <label class="control-label "style="color:white;">Descriere</label>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-10">
+                                    @Html.TextArea("Description", Model.Description, new { @class = "form-control" })
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+
+                            </div>
+
+                            <br />
+
+                            @if (!isNew)
+                            {
+                                <div class="row">
+
+                                    <div class="col-xs-12 col-sm-2">
+                                        <label class="control-label ">Procesor image</label>
+                                    </div>
+
+                                    <div class="col-xs-12 col-sm-10">
+                                        <img style="width: 300px; height:150px;" src="~/@Model.ImagePath" alt="Nu exista imagine pentru acest produs" />
+                                    </div>
+
+                                </div>
+
+
+                            }
+
+                        </div>
+
+                        @await Html.PartialAsync(@"_CancelSaveBtn.cshtml")
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
